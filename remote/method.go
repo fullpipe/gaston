@@ -1,4 +1,4 @@
-package method
+package remote
 
 import "github.com/fullpipe/gaston/converter"
 

@@ -1,4 +1,4 @@
-package method
+package remote
 
 import (
 	"reflect"
