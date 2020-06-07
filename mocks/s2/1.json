@@ -1,0 +1,48 @@
+[
+  {
+    "request": {
+      "mehtod": "POST",
+      "json": {
+        "jsonrpc": "2.0",
+        "method": "s2_test",
+        "id": 1,
+        "params": {
+          "email": "*"
+        }
+      }
+    },
+    "response": {
+      "code": 200,
+      "json": {
+        "jsonrpc": "2.0",
+        "result": {
+          "s2_test": "OK"
+        },
+        "id": 1
+      }
+    }
+  },
+  {
+    "request": {
+      "mehtod": "POST",
+      "json": {
+        "jsonrpc": "2.0",
+        "method": "s2_test2",
+        "id": 1,
+        "params": {
+          "email": "*"
+        }
+      }
+    },
+    "response": {
+      "code": 200,
+      "json": {
+        "jsonrpc": "2.0",
+        "result": {
+          "s2_test2": "OK"
+        },
+        "id": 1
+      }
+    }
+  }
+]
