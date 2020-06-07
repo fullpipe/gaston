@@ -18,3 +18,15 @@ convertResult:
     - remove: first_name
     - castString: first_name
 ```
+
+### todo
+
+- [ ] restructure to pkg
+- [ ] config.MethodsFromJson
+- [ ] server.NewServer
+- [ ] remote.Remote
+- [ ] remote.Method
+- [ ] remote.Collection
+- [ ] remote.Middleware
+- [ ] converter...
+- [ ] middleware.NewAuthenticationMiddleware
