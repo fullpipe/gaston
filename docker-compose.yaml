@@ -1,0 +1,14 @@
+version: "3"
+services:
+  s1:
+    image: fullpipe/jmock:latest
+    volumes:
+      - ./mocks/s1:/mocks
+    ports:
+      - 9091:9090
+  s2:
+    image: fullpipe/jmock:latest
+    volumes:
+      - ./mocks/s2:/mocks
+    ports:
+      - 9092:9090
