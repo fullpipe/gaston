@@ -19,14 +19,27 @@ convertResult:
     - castString: first_name
 ```
 
+```json
+{
+    "host": "host.ru/rpc",
+    "name": "user.get",
+    "rename": "get",
+    "convertParams": [
+        { "type": "rename", "from": "userId", "to": "id" },
+        { "type": "snakeCase", "name": "user_id" },
+        { "type": "remove", "name": "user_id" },
+        { "type": "castNumber", "name": "user_id" },
+        { "type": "setValue", "name": "user_id", "value": 2 },
+```
+
 ### todo
 
-- [ ] restructure to pkg
+- [x] restructure to pkg
 - [ ] config.MethodsFromJson
 - [ ] server.NewServer
-- [ ] remote.Remote
-- [ ] remote.Method
-- [ ] remote.Collection
-- [ ] remote.Middleware
-- [ ] converter...
+- [x] remote.Remote
+- [x] remote.Method
+- [x] remote.Collection
+- [x] remote.Middleware
+- [x] converter...
 - [ ] middleware.NewAuthenticationMiddleware

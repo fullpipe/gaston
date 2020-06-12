@@ -1,8 +1,9 @@
-package remote
+package server
 
 import (
 	"context"
 	"fmt"
+	"github.com/fullpipe/gaston/pkg/remote"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -18,7 +19,7 @@ type GastonContext struct {
 }
 
 type Server struct {
-	Remote  Remote
+	Remote  remote.Remote
 	handler http.Handler
 }
 
@@ -35,7 +36,6 @@ func SetContext(req *http.Request, gastonContext *GastonContext) *http.Request {
 	return req.WithContext(context.WithValue(req.Context(), &GastonContextKey{}, gastonContext))
 }
 
-//type Middleware func(http.HandlerFunc) http.HandlerFunc
 type Middleware func(next http.Handler) http.Handler
 type httpHandler struct {
 	Server *Server
@@ -60,12 +60,12 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 func (h *httpHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	body, err := ioutil.ReadAll(r.Body)
 	if err != nil {
-		w.Write(Error(Request{}, -32700, err.Error()))
+		w.Write(remote.Error(remote.Request{}, -32700, err.Error()))
 		return
 	}
 
 	if !gjson.ValidBytes(body) {
-		w.Write(Error(Request{}, -32700, "Parse error"))
+		w.Write(remote.Error(remote.Request{}, -32700, "Parse error"))
 		return
 	}
 
@@ -81,7 +81,7 @@ func (h *httpHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 		respJson := []byte("[]")
 		for _, bpart := range jsonBody.Array() {
-			request := Request{
+			request := remote.Request{
 				ID:        bpart.Get("id").Value(),
 				Method:    bpart.Get("method").String(),
 				Version:   "",
@@ -89,7 +89,7 @@ func (h *httpHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 				Roles:     context.Roles,
 			}
 
-			go func(request Request) {
+			go func(request remote.Request) {
 				respBody := h.Server.Remote.Call(request)
 				log.Println(string(respBody))
 				mux.Lock()
@@ -104,7 +104,7 @@ func (h *httpHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	request := Request{
+	request := remote.Request{
 		ID:        jsonBody.Get("id").Value(),
 		Method:    jsonBody.Get("method").String(),
 		Version:   "",

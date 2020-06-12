@@ -1,6 +1,6 @@
 package remote
 
-import "github.com/fullpipe/gaston/converter"
+import "github.com/fullpipe/gaston/pkg/converter"
 
 type Method struct {
 	Host             string

@@ -3,7 +3,7 @@ package remote
 import (
 	"testing"
 
-	"github.com/fullpipe/gaston/converter"
+	"github.com/fullpipe/gaston/pkg/converter"
 )
 
 func TestMethod_IsGranted(t *testing.T) {
