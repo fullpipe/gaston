@@ -30,6 +30,7 @@ convertResult:
         { "type": "remove", "name": "user_id" },
         { "type": "castNumber", "name": "user_id" },
         { "type": "setValue", "name": "user_id", "value": 2 },
+    ]
 ```
 
 ### todo
@@ -43,3 +44,5 @@ convertResult:
 - [x] remote.Middleware
 - [x] converter...
 - [ ] middleware.NewAuthenticationMiddleware
+- [ ] converters: snakeCase, cammelCase, remove, default, set, castNumber,
+  castString, castBoolean

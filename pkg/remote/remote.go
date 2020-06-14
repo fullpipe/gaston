@@ -23,10 +23,10 @@ func (r *Remote) Call(req Request) []byte {
 		return Error(req, -32000, "Method not granted")
 	}
 
-	paramsData := req.RawParams.Raw
+	params := req.RawParams
 	var err error
 	for _, converter := range method.ParamConverters {
-		paramsData, err = converter.Convert(paramsData)
+		params, err = converter.Convert(params)
 		if err != nil {
 			return Error(req, -32602, "Invalid params")
 		}
@@ -37,7 +37,7 @@ func (r *Remote) Call(req Request) []byte {
 		rpcRequest, _ = sjson.Set(rpcRequest, "id", req.ID)
 	}
 	rpcRequest, _ = sjson.Set(rpcRequest, "method", method.Rename)
-	rpcRequest, _ = sjson.SetRaw(rpcRequest, "params", paramsData)
+	rpcRequest, _ = sjson.SetRaw(rpcRequest, "params", params.Raw)
 
 	httpReq, err := http.NewRequest(
 		"POST",

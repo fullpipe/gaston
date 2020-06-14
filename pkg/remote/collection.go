@@ -13,3 +13,6 @@ func (c *MethodCollection) Find(methodName string, version string) *Method {
 
 	return nil
 }
+func (c *MethodCollection) Add(m Method) {
+	c.Methods = append(c.Methods, m)
+}
