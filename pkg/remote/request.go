@@ -7,5 +7,6 @@ type Request struct {
 	Method    string
 	Version   string
 	Roles     []string
+	Headers   map[string][]string
 	RawParams gjson.Result
 }

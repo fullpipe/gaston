@@ -47,7 +47,13 @@ func (r *Remote) Call(req Request) []byte {
 	if err != nil {
 		return Error(req, -32603, err.Error())
 	}
+
 	httpReq.Header.Add("Content-Type", "application/json")
+	for h, vs := range req.Headers {
+		for _, v := range vs {
+			httpReq.Header.Add(h, v)
+		}
+	}
 
 	resp, err := r.Client.Do(httpReq)
 	if err != nil {

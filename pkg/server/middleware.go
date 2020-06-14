@@ -2,9 +2,10 @@ package server
 
 import (
 	"fmt"
-	"github.com/dgrijalva/jwt-go"
 	"net/http"
 	"strings"
+
+	"github.com/dgrijalva/jwt-go"
 )
 
 func AuthenticationMiddleware(next http.Handler) http.Handler {
@@ -57,6 +58,9 @@ func AuthenticationMiddleware(next http.Handler) http.Handler {
 					gastonContext.Roles = append(gastonContext.Roles, t)
 				}
 			}
+
+			gastonContext.Headers["X-Verified-Roles"] = gastonContext.Roles
+			gastonContext.Headers["X-Verified-User"] = []string{claims["sub"].(string)}
 		}
 
 		req = SetContext(req, gastonContext)

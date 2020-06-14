@@ -7,6 +7,7 @@ type Method struct {
 	Version          string
 	Name             string
 	Rename           string
+	RemoteName       string
 	Roles            []string
 	ParamConverters  []converter.Converter
 	ResultConverters []converter.Converter
