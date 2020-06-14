@@ -36,7 +36,10 @@ convertResult:
 ### todo
 
 - [x] restructure to pkg
-- [ ] config.MethodsFromJson
+- [x] config.MethodsFromJson
+- [ ] server.Builder
+    - [ ] NewServer
+    - [ ]
 - [ ] server.NewServer
 - [x] remote.Remote
 - [x] remote.Method
