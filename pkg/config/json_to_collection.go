@@ -26,3 +26,7 @@ func JsonToCollection(json gjson.Result) (remote.MethodCollection, error) {
 
 	return c, nil
 }
+
+func JsonStringToCollection(json string) (remote.MethodCollection, error) {
+	return JsonToCollection(gjson.Parse(json))
+}
