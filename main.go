@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"log"
@@ -15,7 +16,18 @@ import (
 )
 
 func main() {
-	files, err := filepath.Glob("methods/*.json")
+	gastonConfigRaw, err := ioutil.ReadFile("config/gaston.json")
+	if err != nil {
+		log.Fatalln(err)
+	}
+
+	var serverConfig config.ServerConfig
+	if err := json.Unmarshal(gastonConfigRaw, &serverConfig); err != nil {
+		log.Fatalln(err)
+	}
+	serverConfig.Normilize()
+
+	files, err := filepath.Glob("config/methods/*.json")
 	if err != nil {
 		log.Fatalln(err)
 	}
@@ -70,20 +82,9 @@ func main() {
 		},
 	}
 
-	s.Use(LogMiddleware)
-	s.Use(server.NewJWTAuthorizationMiddleware(server.JWTAuthorizationConfig{
-		HmacSecret: "qwertyuiopasdfghjklzxcvbnm123456",
-	}))
-	http.Handle("/", &s)
+	s.Use(server.NewJWTAuthorizationMiddleware(serverConfig.JwtAuthorization))
+	http.Handle(serverConfig.Server.Route, &s)
 
 	// TODO: move port to envars
-	log.Fatalln(http.ListenAndServe(":8080", nil))
-}
-
-func LogMiddleware(next http.Handler) http.Handler {
-	return http.HandlerFunc(func(w http.ResponseWriter, req *http.Request) {
-		fmt.Println(req)
-
-		next.ServeHTTP(w, req)
-	})
+	log.Fatalln(http.ListenAndServe(fmt.Sprintf(":%d", serverConfig.Server.Port), nil))
 }

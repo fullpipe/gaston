@@ -9,13 +9,13 @@ import (
 )
 
 type JWTAuthorizationConfig struct {
-	Header            string
-	Scheme            string
-	HmacSecret        string
-	RolesClaim        string
-	UserClaim         string
-	RemoteUserHeader  string
-	RemoteRolesHeader string
+	Header            string `json:"header"`
+	Scheme            string `json:"scheme"`
+	HmacSecret        string `json:"hmacSecret"`
+	RolesClaim        string `json:"rolesClaim"`
+	UserClaim         string `json:"userClaim"`
+	RemoteUserHeader  string `json:"remoteUserHeader"`
+	RemoteRolesHeader string `json:"remoteRolesHeader"`
 }
 
 func (c *JWTAuthorizationConfig) normilize() {
