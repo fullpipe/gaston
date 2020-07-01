@@ -41,7 +41,7 @@ services:
 
 ### methods.json example
 
-```json
+```jsonc
 [
   {
     "host": "http://user:8080/rpc", // hidden service url
@@ -71,7 +71,7 @@ services:
 
 ##### Client to Gaston
 
-```json
+```jsonc
 {
 	"jsonrpc": "2.0",
 	"method": "user.get",
@@ -84,7 +84,7 @@ services:
 
 ##### Gaston to Service 
 
-```json
+```jsonc
 {
 	"jsonrpc": "2.0",
 	"method": "getUser", // method name converted to remoteName
@@ -96,7 +96,7 @@ services:
 ```
 
 ##### Service to Gaston
-```json
+```jsonc
 {
   "jsonrpc": "2.0",
   "result": {
@@ -111,7 +111,7 @@ services:
 
 ##### Gaston to Client
 
-```json
+```jsonc
 {
   "jsonrpc": "2.0",
   "result": {
