@@ -6,7 +6,6 @@ type Method struct {
 	Host             string
 	Version          string
 	Name             string
-	Rename           string
 	RemoteName       string
 	Roles            []string
 	ParamConverters  []converter.Converter

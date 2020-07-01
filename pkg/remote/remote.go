@@ -37,7 +37,12 @@ func (r *Remote) Call(req Request) []byte {
 	if req.ID != nil {
 		rpcRequest, _ = sjson.Set(rpcRequest, "id", req.ID)
 	}
-	rpcRequest, _ = sjson.Set(rpcRequest, "method", method.Rename)
+
+	if method.RemoteName != "" {
+		rpcRequest, _ = sjson.Set(rpcRequest, "method", method.RemoteName)
+	} else {
+		rpcRequest, _ = sjson.Set(rpcRequest, "method", method.Name)
+	}
 	rpcRequest, _ = sjson.SetRaw(rpcRequest, "params", params.Raw)
 
 	httpReq, err := http.NewRequest(
