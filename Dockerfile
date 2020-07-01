@@ -13,7 +13,7 @@ RUN go mod download
 
 COPY . .
 
-RUN go build -o gaston .
+RUN go build -a -installsuffix cgo -ldflags="-w -s" -o gaston .
 
 FROM scratch
 
