@@ -13,7 +13,6 @@ func AuthenticationMiddleware(next http.Handler) http.Handler {
 		tokenRaw := req.Header.Get("Authorization")
 		tokens := strings.Split(tokenRaw, "Bearer")
 
-		fmt.Println(tokens)
 		if len(tokens) != 2 {
 			next.ServeHTTP(w, req)
 			return
@@ -35,8 +34,12 @@ func AuthenticationMiddleware(next http.Handler) http.Handler {
 			return []byte("qwertyuiopasdfghjklzxcvbnm123456"), nil
 		})
 
+		if err != nil {
+			next.ServeHTTP(w, req)
+			return
+		}
+
 		if !token.Valid {
-			fmt.Println(err)
 			next.ServeHTTP(w, req)
 			return
 		}

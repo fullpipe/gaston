@@ -1,9 +1,7 @@
 package server
 
 import (
-	"fmt"
 	"io/ioutil"
-	"log"
 	"net/http"
 	"sync"
 
@@ -53,7 +51,6 @@ func (h *httpHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	}
 
 	context := GetContext(r)
-	fmt.Println(context)
 
 	jsonBody := gjson.ParseBytes(body)
 	if jsonBody.IsArray() {
@@ -70,7 +67,6 @@ func (h *httpHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 				defer wg.Done()
 
 				respBody := h.Server.Remote.Call(request)
-				log.Println(string(respBody))
 				mux.Lock()
 				respJson, _ = sjson.SetRawBytes(respJson, "-1", respBody)
 				mux.Unlock()
