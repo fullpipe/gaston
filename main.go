@@ -71,10 +71,9 @@ func main() {
 	}
 
 	s.Use(LogMiddleware)
-	s.Use(server.AuthenticationMiddleware)
-	// TODO: handle errors
-	//http.Handle("/", &server)
-	//http.Handle("/", AuthenticationMiddleware(LogMiddleware(&server)))
+	s.Use(server.NewJWTAuthorizationMiddleware(server.JWTAuthorizationConfig{
+		HmacSecret: "qwertyuiopasdfghjklzxcvbnm123456",
+	}))
 	http.Handle("/", &s)
 
 	// TODO: move port to envars
