@@ -9,9 +9,8 @@ import (
 func TestMethod_IsGranted(t *testing.T) {
 	type fields struct {
 		Host             string
-		Version          string
 		Name             string
-		Rename           string
+		RemoteName       string
 		Roles            []string
 		ParamConverters  []converter.Converter
 		ResultConverters []converter.Converter
@@ -48,9 +47,8 @@ func TestMethod_IsGranted(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			m := &Method{
 				Host:             tt.fields.Host,
-				Version:          tt.fields.Version,
 				Name:             tt.fields.Name,
-				Rename:           tt.fields.Rename,
+				RemoteName:       tt.fields.RemoteName,
 				Roles:            tt.fields.Roles,
 				ParamConverters:  tt.fields.ParamConverters,
 				ResultConverters: tt.fields.ResultConverters,

@@ -2,6 +2,7 @@ package server
 
 import (
 	"fmt"
+	"log"
 	"net/http"
 	"strings"
 
@@ -9,13 +10,13 @@ import (
 )
 
 type JWTAuthorizationConfig struct {
-	Header            string `json:"header"`
-	Scheme            string `json:"scheme"`
-	HmacSecret        string `json:"hmacSecret"`
-	RolesClaim        string `json:"rolesClaim"`
-	UserClaim         string `json:"userClaim"`
-	RemoteUserHeader  string `json:"remoteUserHeader"`
-	RemoteRolesHeader string `json:"remoteRolesHeader"`
+	Header            string
+	Scheme            string
+	HmacSecret        string
+	RolesClaim        string
+	UserClaim         string
+	RemoteUserHeader  string
+	RemoteRolesHeader string
 }
 
 func (c *JWTAuthorizationConfig) normilize() {
@@ -49,7 +50,7 @@ func NewJWTAuthorizationMiddleware(config JWTAuthorizationConfig) Middleware {
 
 	if config.HmacSecret == "" {
 		// todo: move it to jwt.Parse?
-		panic("Specify HmacSecret for JWTAuthorizationConfig")
+		log.Fatalln("Specify HmacSecret for JWTAuthorizationConfig")
 	}
 
 	return func(next http.Handler) http.Handler {

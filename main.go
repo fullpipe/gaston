@@ -1,7 +1,6 @@
 package main
 
 import (
-	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"log"
@@ -10,24 +9,20 @@ import (
 	"time"
 
 	"github.com/fullpipe/gaston/pkg/config"
-	"github.com/fullpipe/gaston/pkg/converter"
 	"github.com/fullpipe/gaston/pkg/remote"
 	"github.com/fullpipe/gaston/pkg/server"
+	"github.com/kelseyhightower/envconfig"
 )
 
 func main() {
-	gastonConfigRaw, err := ioutil.ReadFile("config/gaston.json")
-	if err != nil {
-		log.Fatalln(err)
-	}
-
 	var serverConfig config.ServerConfig
-	if err := json.Unmarshal(gastonConfigRaw, &serverConfig); err != nil {
-		log.Fatalln(err)
+	err := envconfig.Process("gaston", &serverConfig)
+	if err != nil {
+		log.Fatal(err.Error())
 	}
 	serverConfig.Normilize()
 
-	files, err := filepath.Glob("config/methods/*.json")
+	files, err := filepath.Glob(serverConfig.Server.MethodsPath)
 	if err != nil {
 		log.Fatalln(err)
 	}
@@ -43,28 +38,6 @@ func main() {
 		collection = collection.Merge(c)
 	}
 
-	fmt.Println(collection)
-
-	// TODO: build collection from config file
-	c2 := remote.MethodCollection{
-		Methods: []remote.Method{
-			remote.Method{
-				Host:       "http://localhost:9092/rpc",
-				Name:       "test5",
-				RemoteName: "s2_test2",
-				Roles:      []string{"asd", "ROLE_USER"},
-				ParamConverters: []converter.Converter{
-					&converter.Rename{
-						From: "email_input",
-						To:   "email",
-					},
-				},
-			},
-		},
-	}
-
-	collection = collection.Merge(c2)
-
 	// get config from config file?
 	tr := &http.Transport{
 		MaxIdleConns:    0,
@@ -72,7 +45,7 @@ func main() {
 	}
 	client := &http.Client{
 		Transport: tr,
-		Timeout:   time.Second * 2,
+		Timeout:   time.Second * time.Duration(serverConfig.Server.RemoteTimeout),
 	}
 
 	s := server.Server{
@@ -82,9 +55,8 @@ func main() {
 		},
 	}
 
-	s.Use(server.NewJWTAuthorizationMiddleware(serverConfig.JwtAuthorization))
+	s.Use(server.NewJWTAuthorizationMiddleware(serverConfig.Jwt))
 	http.Handle(serverConfig.Server.Route, &s)
 
-	// TODO: move port to envars
 	log.Fatalln(http.ListenAndServe(fmt.Sprintf(":%d", serverConfig.Server.Port), nil))
 }
