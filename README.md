@@ -1,5 +1,7 @@
 # gaston
 
+[![Tests Status](https://github.com/fullpipe/gaston/workflows/Tests/badge.svg)](https://github.com/fullpipe/gaston)
+
 ```yaml
 host: ok.ru/rpc
 version: v2
@@ -35,17 +37,14 @@ convertResult:
 
 ### todo
 
-- [x] restructure to pkg
-- [x] config.MethodsFromJson
-- [ ] server.Builder
-    - [ ] NewServer
-    - [ ]
-- [ ] server.NewServer
-- [x] remote.Remote
-- [x] remote.Method
-- [x] remote.Collection
-- [x] remote.Middleware
-- [x] converter...
-- [ ] middleware.NewAuthenticationMiddleware
-- [ ] converters: snakeCase, cammelCase, remove, default, set, castNumber,
-  castString, castBoolean
+- [ ] More converters
+  - [x] rename, rename param key
+  - [x] overwrite, overwrite param value if param exists
+  - [ ] snakeCase, convert param key to snake_case. userId -> user_id
+  - [ ] cammelCase, convert param key to cammelCase. user_id -> userId
+  - [ ] remove, remove param by key
+  - [ ] default, setup param if not exists
+  - [ ] set, overwrite + default
+  - [ ] castNumber, cast value to number
+  - [ ] castString, cast value to string
+  - [ ] castBoolean, cast value to boolean
