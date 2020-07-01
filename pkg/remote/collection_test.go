@@ -11,11 +11,9 @@ func TestMethodCollection_Find(t *testing.T) {
 	}
 	type args struct {
 		methodName string
-		version    string
 	}
-	m1 := Method{Name: "foo", Version: "v1"}
-	m2 := Method{Name: "foo", Version: "v2"}
-	m3 := Method{Name: "foo2"}
+	m1 := Method{Name: "foo"}
+	m2 := Method{Name: "foo2"}
 	tests := []struct {
 		name   string
 		fields fields
@@ -23,36 +21,20 @@ func TestMethodCollection_Find(t *testing.T) {
 		want   *Method
 	}{
 		{
-			"find method by name and version",
+			"find method by name",
 			fields{Methods: []Method{
 				m1, m2,
 			}},
-			args{methodName: "foo", version: "v2"},
-			&m2,
-		},
-		{
-			"find method by both name and version",
-			fields{Methods: []Method{
-				m1, m2,
-			}},
-			args{methodName: "foo", version: ""},
-			nil,
+			args{methodName: "foo"},
+			&m1,
 		},
 		{
 			"returns nil if method not found",
 			fields{Methods: []Method{
 				m1, m2,
 			}},
-			args{methodName: "bar", version: "v2"},
+			args{methodName: "bar"},
 			nil,
-		},
-		{
-			"find versionless method",
-			fields{Methods: []Method{
-				m1, m2, m3,
-			}},
-			args{methodName: "foo2"},
-			&m3,
 		},
 	}
 	for _, tt := range tests {
@@ -60,8 +42,40 @@ func TestMethodCollection_Find(t *testing.T) {
 			c := &MethodCollection{
 				Methods: tt.fields.Methods,
 			}
-			if got := c.Find(tt.args.methodName, tt.args.version); !reflect.DeepEqual(got, tt.want) {
+			if got := c.Find(tt.args.methodName); !reflect.DeepEqual(got, tt.want) {
 				t.Errorf("MethodCollection.Find() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func TestMethodCollection_Merge(t *testing.T) {
+	type fields struct {
+		Methods []Method
+	}
+	type args struct {
+		c2 MethodCollection
+	}
+	tests := []struct {
+		name   string
+		fields fields
+		args   args
+		want   MethodCollection
+	}{
+		{
+			"it merges collections",
+			fields{Methods: []Method{Method{Name: "foo"}}},
+			args{MethodCollection{Methods: []Method{Method{Name: "bar"}}}},
+			MethodCollection{Methods: []Method{Method{Name: "foo"}, Method{Name: "bar"}}},
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			c := &MethodCollection{
+				Methods: tt.fields.Methods,
+			}
+			if got := c.Merge(tt.args.c2); !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("MethodCollection.Merge() = %v, want %v", got, tt.want)
 			}
 		})
 	}
