@@ -15,7 +15,7 @@ type Remote struct {
 }
 
 func (r *Remote) Call(req Request) []byte {
-	method := r.Methods.Find(req.Method, req.Version)
+	method := r.Methods.Find(req.Method)
 	if method == nil {
 		return Error(req, -32601, "Method not found")
 	}
