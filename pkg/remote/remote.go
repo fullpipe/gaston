@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"strings"
 
+	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
 
@@ -65,7 +66,17 @@ func (r *Remote) Call(req Request) []byte {
 		return Error(req, -32603, err.Error())
 	}
 
-	return body
+	rpcResp := gjson.ParseBytes(body)
+	result := rpcResp.Get("result")
+	for _, converter := range method.ResultConverters {
+		result, err = converter.Convert(result)
+		if err != nil {
+			return Error(req, -32602, "Invalid result")
+		}
+	}
+	rawResp, _ := sjson.SetRaw(rpcResp.Raw, "result", result.Raw)
+
+	return []byte(rawResp)
 }
 
 func Error(req Request, code int, message string) []byte {

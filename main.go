@@ -21,9 +21,15 @@ func main() {
 				Rename: "s1_test",
 				Roles:  []string{"asd", "ROLE_USER"},
 				ParamConverters: []converter.Converter{
-					&converter.RenameKey{
+					&converter.Rename{
 						From: "email_input",
 						To:   "email",
+					},
+				},
+				ResultConverters: []converter.Converter{
+					&converter.Rename{
+						From: "s1_test",
+						To:   "s1_success",
 					},
 				},
 			},
@@ -33,7 +39,7 @@ func main() {
 				Rename: "s1_test2",
 				Roles:  []string{"asd", "ROLE_USER"},
 				ParamConverters: []converter.Converter{
-					&converter.RenameKey{
+					&converter.Rename{
 						From: "email_input",
 						To:   "email",
 					},
@@ -45,7 +51,7 @@ func main() {
 				Rename: "s2_test",
 				Roles:  []string{"asd", "ROLE_USER"},
 				ParamConverters: []converter.Converter{
-					&converter.RenameKey{
+					&converter.Rename{
 						From: "email_input",
 						To:   "email",
 					},
@@ -57,7 +63,7 @@ func main() {
 				Rename: "s2_test2",
 				Roles:  []string{"asd", "ROLE_USER"},
 				ParamConverters: []converter.Converter{
-					&converter.RenameKey{
+					&converter.Rename{
 						From: "email_input",
 						To:   "email",
 					},
