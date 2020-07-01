@@ -85,6 +85,12 @@ func TestJsonToMethod(t *testing.T) {
 			want:    remote.Method{Host: "foo", Name: "bar", ResultConverters: []converter.Converter{&converter.Rename{From: "foo", To: "bar"}}},
 			wantErr: false,
 		},
+		{
+			name:    "It parse roles",
+			args:    args{gjson.Parse(`{ "host": "foo", "name": "bar", "roles": ["one", "two"] }`)},
+			want:    remote.Method{Host: "foo", Name: "bar", Roles: []string{"one", "two"}},
+			wantErr: false,
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {

@@ -31,6 +31,12 @@ func JsonToMethod(json gjson.Result) (remote.Method, error) {
 		RemoteName: json.Get("remoteName").String(),
 	}
 
+	json.Get("roles").ForEach(func(key gjson.Result, role gjson.Result) bool {
+		m.Roles = append(m.Roles, role.String())
+
+		return true
+	})
+
 	convJson := json.Get("paramConverters")
 	if convJson.Exists() {
 		if !convJson.IsArray() {
