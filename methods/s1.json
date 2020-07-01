@@ -1,0 +1,22 @@
+[
+  {
+    "host": "http://localhost:9091/rpc",
+    "name": "test1",
+    "remoteName": "s1_test",
+    "roles": ["ROLE_USER"],
+    "paramConverters": [
+      { "type": "rename", "from": "email_input", "to": "email" }
+    ],
+    "resultConverters": [
+      { "type": "rename", "from": "s1_test", "to": "s1_success" }
+    ]
+  },
+  {
+    "host": "http://localhost:9091/rpc",
+    "name": "test2",
+    "remoteName": "s1_test2",
+    "paramConverters": [
+      { "type": "rename", "from": "email_input", "to": "email" }
+    ]
+  }
+]
