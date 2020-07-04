@@ -211,4 +211,5 @@ GASTON_JWT_REMOTEROLESHEADER: X-Verified-Roles # header name to pass user roles 
   - [x] castNumber, cast value to number
   - [ ] castString, cast value to string
   - [ ] castBoolean, cast value to boolean
+  - [ ] nullFix, convert string "null" to real null
 - [ ] Examples
