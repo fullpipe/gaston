@@ -3,7 +3,7 @@
 [![Tests Status](https://github.com/fullpipe/gaston/workflows/Tests/badge.svg)](https://github.com/fullpipe/gaston)
 [![Docker Image](https://img.shields.io/docker/image-size/fullpipe/gaston/latest)](https://cloud.docker.com/repository/docker/fullpipe/gaston)
 
-Gaston is json-rpc 2.0 API gateway.
+Gaston is the json-rpc 2.0 API gateway.
 
 ## Usage
 
