@@ -47,7 +47,7 @@ services:
     "host": "http://user:8080/rpc", // hidden service url
     "name": "user.get", // method name for gaston clients
     "remoteName": "getUser", // method name on hidden service
-    "roles": ["ROLE_USER"], // client has to have at least on of the roles, to get access to hidden service
+    "roles": ["ROLE_USER"], // client has to have at least one of the roles, to get access to hidden service
     "paramConverters": [ // paramConverters do some work on client params
       { "type": "rename", "from": "userId", "to": "id" }
     ],
