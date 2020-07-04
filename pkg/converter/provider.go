@@ -21,6 +21,8 @@ func NewProvider() *Provider {
 	p.Add("overwite", NewOverwrite)
 	p.Add("snakeCase", NewSnakeCase)
 	p.Add("snake_case", NewSnakeCase)
+	p.Add("remove", NewRemove)
+	p.Add("delete", NewRemove)
 
 	return &p
 }

@@ -148,6 +148,18 @@ Transform param name to its snake_cased version
 
 ```jsonc
 { "type": "snakeCase", "name": "fooBar" } // will convert to `foo_bar`
+// or
+{ "type": "snake_case", "name": "fooBar" }
+```
+
+### remove
+
+Removes param by name if exists
+
+```jsonc
+{ "type": "remove", "name": "fooBar" }
+// or
+{ "type": "delete", "name": "fooBar" }
 ```
 
 
@@ -175,7 +187,7 @@ GASTON_JWT_REMOTEROLESHEADER: X-Verified-Roles # header name to pass user roles 
   - [x] overwrite, overwrite param value if param exists
   - [x] snakeCase, convert param name to snake_case. userId -> user_id
   - [ ] cammelCase, convert param name to cammelCase. user_id -> userId
-  - [ ] remove, remove param by name
+  - [x] remove, remove param by name
   - [ ] default, setup param if not exists
   - [ ] set, overwrite + default
   - [ ] castNumber, cast value to number
