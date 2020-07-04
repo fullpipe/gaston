@@ -82,7 +82,7 @@ services:
 }
 ```
 
-##### Gaston to Service 
+##### Gaston to Service
 
 ```jsonc
 {
@@ -142,6 +142,14 @@ Overwrite param/result by name. If param/result with name not exists, does nothi
 { "type": "overwrite", "name": "age", "newValue": 18 }
 ```
 
+### snake_case
+
+Transform param name to its snake_cased version
+
+```jsonc
+{ "type": "snakeCase", "name": "fooBar" } // will convert to `foo_bar`
+```
+
 
 ## Env var
 
@@ -149,7 +157,7 @@ Here available env vars, with their default values
 
 ```yaml
 GASTON_SERVER_ROUTE: / # route, http://gaston/, http://gaston/v1, http://gaston/v2
-GASTON_SERVER_PORT: 8080 
+GASTON_SERVER_PORT: 8080
 GASTON_SERVER_METHODSPATH: "/methods/*.json" # glob path to lookup methods
 GASTON_SERVER_REMOTETIMEOUT: 5 # timeout for remote requests
 GASTON_JWT_HEADER: Authorization # header name to read JWT token from
@@ -162,15 +170,10 @@ GASTON_JWT_REMOTEROLESHEADER: X-Verified-Roles # header name to pass user roles 
 ```
 
 ## todo
-- [ ] Docs
-  - [ ] config
-  - [ ] converter
-  - [ ] remote
-  - [ ] server
 - [ ] More converters
   - [x] rename, rename param key
   - [x] overwrite, overwrite param value if param exists
-  - [ ] snakeCase, convert param name to snake_case. userId -> user_id
+  - [x] snakeCase, convert param name to snake_case. userId -> user_id
   - [ ] cammelCase, convert param name to cammelCase. user_id -> userId
   - [ ] remove, remove param by name
   - [ ] default, setup param if not exists
