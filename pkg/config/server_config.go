@@ -2,6 +2,7 @@ package config
 
 import "github.com/fullpipe/gaston/pkg/server"
 
+// ServerConfig holds server configuration
 type ServerConfig struct {
 	Server struct {
 		Route         string
@@ -12,6 +13,7 @@ type ServerConfig struct {
 	Jwt server.JWTAuthorizationConfig
 }
 
+// Normilize sets up default values for ServerConfig
 func (s *ServerConfig) Normilize() {
 	if s.Server.Route == "" {
 		s.Server.Route = "/"

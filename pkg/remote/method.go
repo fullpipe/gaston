@@ -2,6 +2,7 @@ package remote
 
 import "github.com/fullpipe/gaston/pkg/converter"
 
+// Method struct.
 type Method struct {
 	Host             string
 	Version          string
@@ -12,6 +13,7 @@ type Method struct {
 	ResultConverters []converter.Converter
 }
 
+// IsGranted check is it possible to use Method with provided roles
 func (m *Method) IsGranted(roles []string) bool {
 	if len(m.Roles) == 0 {
 		return true

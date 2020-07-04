@@ -9,6 +9,7 @@ import (
 	"github.com/dgrijalva/jwt-go"
 )
 
+// JWTAuthorizationConfig stores config
 type JWTAuthorizationConfig struct {
 	Header            string
 	Scheme            string
@@ -45,6 +46,7 @@ func (c *JWTAuthorizationConfig) normilize() {
 	}
 }
 
+// NewJWTAuthorizationMiddleware returns Middleware to handle JWT tokens
 func NewJWTAuthorizationMiddleware(config JWTAuthorizationConfig) Middleware {
 	config.normilize()
 

@@ -11,13 +11,16 @@ import (
 	"github.com/tidwall/sjson"
 )
 
+// Server stores Remote and middlewares
 type Server struct {
 	Remote  remote.Remote
 	handler http.Handler
 }
 
+// Middleware returns request handlers
 type Middleware func(next http.Handler) http.Handler
 
+// Use wraps request handler into Middleware
 func (s *Server) Use(m Middleware) {
 	if s.handler == nil {
 		s.handler = &httpHandler{s}

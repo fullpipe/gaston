@@ -12,6 +12,7 @@ import (
 // todo: move to ConfigParser
 var converters *converter.Provider = converter.NewProvider()
 
+// JsonToMethod convert gjson object to Method
 func JsonToMethod(json gjson.Result) (remote.Method, error) {
 	if !json.IsObject() {
 		return remote.Method{}, errors.New("You should pass a json object")

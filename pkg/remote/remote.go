@@ -14,6 +14,7 @@ type Remote struct {
 	Methods MethodCollection
 }
 
+// Call makes requests to hidden services
 func (r *Remote) Call(req Request) []byte {
 	method := r.Methods.Find(req.Method)
 	if method == nil {
@@ -84,6 +85,7 @@ func (r *Remote) Call(req Request) []byte {
 	return []byte(rawResp)
 }
 
+// Error returs jsonrpc error
 func Error(req Request, code int, message string) []byte {
 	e, _ := sjson.Set("", "jsonrpc", "2.0")
 	e, _ = sjson.Set(e, "id", req.ID)

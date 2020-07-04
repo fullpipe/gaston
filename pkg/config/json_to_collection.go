@@ -8,6 +8,7 @@ import (
 	"github.com/fullpipe/gaston/pkg/remote"
 )
 
+// JsonToCollection converts gjson collection to collection of Methods
 func JsonToCollection(json gjson.Result) (remote.MethodCollection, error) {
 	c := remote.MethodCollection{Methods: []remote.Method{}}
 
@@ -27,6 +28,7 @@ func JsonToCollection(json gjson.Result) (remote.MethodCollection, error) {
 	return c, nil
 }
 
+// JsonStringToCollection converts json string to collection of Methods
 func JsonStringToCollection(json string) (remote.MethodCollection, error) {
 	return JsonToCollection(gjson.Parse(json))
 }
