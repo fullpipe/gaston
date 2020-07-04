@@ -162,6 +162,24 @@ Removes param by name if exists
 { "type": "delete", "name": "fooBar" }
 ```
 
+### castNumber
+
+Cast param value to number
+
+```jsonc
+{ "type": "castNumber", "name": "userId" } // { "userId: "123" } -> { "userId: 123 }
+{ "type": "castNumber", "name": "price" } // { "price: "1.333" } -> { "userId: 1.333 }
+```
+
+```
+true -> 1
+false -> 0
+null -> 0
+empty string -> 0
+"1" -> 1
+"1.1" -> 1.1
+other -> null
+```
 
 ## Env var
 
@@ -190,7 +208,7 @@ GASTON_JWT_REMOTEROLESHEADER: X-Verified-Roles # header name to pass user roles 
   - [x] remove, remove param by name
   - [ ] default, setup param if not exists
   - [ ] set, overwrite + default
-  - [ ] castNumber, cast value to number
+  - [x] castNumber, cast value to number
   - [ ] castString, cast value to string
   - [ ] castBoolean, cast value to boolean
 - [ ] Examples

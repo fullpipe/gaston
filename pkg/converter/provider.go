@@ -23,6 +23,7 @@ func NewProvider() *Provider {
 	p.Add("snake_case", NewSnakeCase)
 	p.Add("remove", NewRemove)
 	p.Add("delete", NewRemove)
+	p.Add("castNumber", NewCastNumber)
 
 	return &p
 }
