@@ -200,6 +200,8 @@ GASTON_JWT_REMOTEROLESHEADER: X-Verified-Roles # header name to pass user roles 
 ```
 
 ## todo
+- [ ] Pass Allowed origins with envars
+- [ ] Fix param handling without paramnames
 - [ ] More converters
   - [x] rename, rename param key
   - [x] overwrite, overwrite param value if param exists

@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"github.com/rs/cors"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -54,9 +55,11 @@ func main() {
 			Client:  client,
 		},
 	}
-
 	s.Use(server.NewJWTAuthorizationMiddleware(serverConfig.Jwt))
-	http.Handle(serverConfig.Server.Route, &s)
 
-	log.Fatalln(http.ListenAndServe(fmt.Sprintf(":%d", serverConfig.Server.Port), nil))
+	mux := http.NewServeMux()
+	mux.Handle(serverConfig.Server.Route, &s)
+	handler := cors.AllowAll().Handler(mux)
+
+	log.Fatalln(http.ListenAndServe(fmt.Sprintf(":%d", serverConfig.Server.Port), handler))
 }
