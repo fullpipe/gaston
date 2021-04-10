@@ -10,7 +10,7 @@ import (
 )
 
 // Middleware returns wraped Remote
-type Middleware func(next *remoteCaller) *remoteCaller
+type Middleware func(next RemoteCaller) RemoteCaller
 
 func NewRemote(client *http.Client, methods MethodCollection) *Remote {
 	return &Remote{
@@ -22,7 +22,7 @@ func NewRemote(client *http.Client, methods MethodCollection) *Remote {
 }
 
 type Remote struct {
-	caller *remoteCaller
+	caller RemoteCaller
 }
 
 // Use wraps Remote.Call into Middleware
@@ -34,10 +34,20 @@ func (r *Remote) Call(req Request) []byte {
 	return r.caller.Call(req)
 }
 
+type RemoteCaller interface {
+	Call(req Request) []byte
+}
+
 // remoteCaller does hard work
 type remoteCaller struct {
 	Client  *http.Client
 	Methods MethodCollection
+}
+
+type CallerFunc func(req Request) []byte
+
+func (f CallerFunc) Call(req Request) []byte {
+	return f(req)
 }
 
 // Call makes requests to hidden services

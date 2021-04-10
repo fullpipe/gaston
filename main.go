@@ -8,6 +8,7 @@ import (
 	"path/filepath"
 	"time"
 
+	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"github.com/rs/cors"
 
 	"github.com/fullpipe/gaston/pkg/config"
@@ -50,14 +51,23 @@ func main() {
 		Timeout:   time.Second * time.Duration(serverConfig.Server.RemoteTimeout),
 	}
 
+	remoteCaller := remote.NewRemote(client, collection)
+	remoteCaller.Use(remote.NewPrometheusMiddleware())
 	s := server.Server{
-		Remote: remote.NewRemote(client, collection),
+		Remote: remoteCaller,
 	}
 	s.Use(server.NewJWTAuthorizationMiddleware(serverConfig.Jwt))
 
 	mux := http.NewServeMux()
 	mux.Handle(serverConfig.Server.Route, &s)
 	handler := cors.AllowAll().Handler(mux)
+
+	// Prometheus endpoint
+	go func() {
+		mux := http.NewServeMux()
+		mux.Handle("/metrics", promhttp.Handler())
+		log.Fatalln(http.ListenAndServe(fmt.Sprintf(":%d", serverConfig.Server.MetricsPort), mux))
+	}()
 
 	log.Fatalln(http.ListenAndServe(fmt.Sprintf(":%d", serverConfig.Server.Port), handler))
 }

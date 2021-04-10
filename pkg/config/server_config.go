@@ -9,6 +9,7 @@ type ServerConfig struct {
 		Port          int
 		MethodsPath   string
 		RemoteTimeout int
+		MetricsPort   int
 	}
 	Jwt server.JWTAuthorizationConfig
 }
@@ -24,5 +25,8 @@ func (s *ServerConfig) Normilize() {
 	}
 	if s.Server.RemoteTimeout == 0 {
 		s.Server.RemoteTimeout = 5
+	}
+	if s.Server.MetricsPort == 0 {
+		s.Server.MetricsPort = 9323
 	}
 }
