@@ -13,7 +13,7 @@ import (
 
 // Server stores Remote and middlewares
 type Server struct {
-	Remote  remote.Remote
+	Remote  *remote.Remote
 	handler http.Handler
 }
 

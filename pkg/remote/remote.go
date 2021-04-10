@@ -9,13 +9,39 @@ import (
 	"github.com/tidwall/sjson"
 )
 
+// Middleware returns wraped Remote
+type Middleware func(next *remoteCaller) *remoteCaller
+
+func NewRemote(client *http.Client, methods MethodCollection) *Remote {
+	return &Remote{
+		caller: &remoteCaller{
+			Client:  client,
+			Methods: methods,
+		},
+	}
+}
+
 type Remote struct {
+	caller *remoteCaller
+}
+
+// Use wraps Remote.Call into Middleware
+func (r *Remote) Use(m Middleware) {
+	r.caller = m(r.caller)
+}
+
+func (r *Remote) Call(req Request) []byte {
+	return r.caller.Call(req)
+}
+
+// remoteCaller does hard work
+type remoteCaller struct {
 	Client  *http.Client
 	Methods MethodCollection
 }
 
 // Call makes requests to hidden services
-func (r *Remote) Call(req Request) []byte {
+func (r *remoteCaller) Call(req Request) []byte {
 	method := r.Methods.Find(req.Method)
 	if method == nil {
 		return Error(req, -32601, "Method not found")

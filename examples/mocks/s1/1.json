@@ -44,5 +44,25 @@
         "id": 1
       }
     }
+  },
+    {
+    "request": {
+      "mehtod": "POST",
+      "json": {
+        "jsonrpc": "2.0",
+        "method": "s1_test"
+      }
+    },
+    "response": {
+      "code": 200,
+      "json": {
+        "jsonrpc": "2.0",
+        "result": {
+          "s1_test": "OK anyparams"
+        },
+        "id": 1
+      }
+    }
   }
+
 ]

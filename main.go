@@ -2,12 +2,13 @@ package main
 
 import (
 	"fmt"
-	"github.com/rs/cors"
 	"io/ioutil"
 	"log"
 	"net/http"
 	"path/filepath"
 	"time"
+
+	"github.com/rs/cors"
 
 	"github.com/fullpipe/gaston/pkg/config"
 	"github.com/fullpipe/gaston/pkg/remote"
@@ -50,10 +51,7 @@ func main() {
 	}
 
 	s := server.Server{
-		Remote: remote.Remote{
-			Methods: collection,
-			Client:  client,
-		},
+		Remote: remote.NewRemote(client, collection),
 	}
 	s.Use(server.NewJWTAuthorizationMiddleware(serverConfig.Jwt))
 
